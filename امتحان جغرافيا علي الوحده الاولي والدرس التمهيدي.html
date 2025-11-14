@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان تاريخ - الدكتور محمد السيد خرخاش</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: "⚔️ 📜 🏛️";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .container::after {
+            content: "👑 🗺️ 📚";
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 24px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #1e3c72;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2c3e50;
+            margin: 20px 0 10px;
+            text-align: center;
+        }
+        .description {
+            color: #666;
+            font-size: 18px;
+        }
+        .teacher-name {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: #f5f2ee;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #1e3c72;
+            border: 1px solid #e0d6c8;
+            z-index: 1;
+        }
+        .user-info {
+            background: #f5f2ee;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid #e0d6c8;
+            position: relative;
+            z-index: 1;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1e3c72;
+            text-align: right;
+        }
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0d6c8;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus,
+        input[type="tel"]:focus {
+            border-color: #1e3c72;
+            outline: none;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+        }
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-number {
+            background: #1e3c72;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c3e50;
+            text-align: right;
+            flex-grow: 1;
+        }
+        .options {
+            margin-right: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 12px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: normal;
+            color: #333;
+            text-align: right;
+            position: relative;
+        }
+        .options label:hover {
+            background-color: #f5f2ee;
+            border-color: #e0d6c8;
+        }
+        .options input {
+            margin-left: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        .score {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e3c72;
+            padding: 15px;
+            background: #f5f2ee;
+            border-radius: 10px;
+        }
+        .send-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .send-btn:hover {
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .submit-btn:hover {
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+        .whatsapp-form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px dashed #25D366;
+            border-radius: 10px;
+            background-color: #e6f7ee;
+        }
+        .whatsapp-form h3 {
+            color: #128C7E;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .phone-note {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 14px;
+        }
+        .developer {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .history-decoration {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 20px;
+            color: #1e3c72;
+        }
+        .timer {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            background: #f5f2ee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .auto-capture-notice {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .question {
+                padding: 15px;
+            }
+            .teacher-name {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .question-number {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="teacher-name">👨‍🏫 الدكتور محمد السيد خرخاش</div>
+            <h1>🏛️ امتحان تاريخ</h1>
+            <p class="description">📝 اختر الإجابة الصحيحة مما بين أ، ب، ج، د</p>
+            <div class="history-decoration">⚔️ 📜 🏛️ 👑 🗺️ 📚</div>
+            <div class="timer" id="timer">⏱️ الوقت المتبقي: 45:00</div>
+            <div class="auto-capture-notice">
+                📸 سيتم التقاط صورة للنتيجة تلقائياً وإرسالها للمعلم عند انتهاء الوقت
+                ⚠️يجب ارسال الصوره يدوين الي المعلم والذين لم يرسلوا الصوره يعدون لم يمتحنوا
+            </div>
+            <div class="warning" id="warning" style="display: none;">
+                ⚠️ لقد غادرت الامتحان! سيتم تغيير ترتيب الأسئلة خلال <span id="countdown">5</span> ثوانٍ
+            </div>
+        </header>
+        
+        <div class="user-info">
+            <div class="input-group">
+                <label for="user-name">👤 الاسم بالكامل:</label>
+                <input type="text" id="user-name" placeholder="أدخل اسمك هنا">
+            </div>
+            <div class="input-group">
+                <label for="user-phone">📞 رقم الهاتف (مع مفتاح الدولة):</label>
+                <input type="tel" id="user-phone" placeholder="+20" value="+20">
+            </div>
+        </div>
+        
+        <form id="quiz-form">
+            <h2>📚 اختر الإجابة الصحيحة مما بين أ، ب، ج، د</h2>
+            
+            <!-- سيتم إضافة الأسئلة هنا ديناميكياً -->
+            
+            <button type="button" id="submit-btn" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> إنهاء الامتحان وإرسال النتيجة
+            </button>
+        </form>
+
+        <div class="results" id="results">
+            <div class="score" id="score"></div>
+            
+            <div class="whatsapp-form">
+                <h3>📱 إرسال النتيجة عبر واتساب</h3>
+                <p class="phone-note">سيتم الإرسال إلى الرقم: +201116901143 (مصر)</p>
+                <button type="button" class="send-btn" id="send-btn">
+                    <i class="fab fa-whatsapp"></i> إرسال النتيجة كصورة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 امتحان تاريخ. جميع الحقوق محفوظة.</p>
+        <p class="developer">تم التطوير بواسطة: محمد عماد عبد العاطي</p>
+    </footer>
+
+    <script>
+        // جميع الأسئلة من الصور المرفقة مع الإجابات الصحيحة
+        const allQuestions = [
+            {
+                id: 1,
+                text: "أي الدول التالية تمتلك القدرة الأكبر على مواجهة الكوارث الطبيعية؟",
+                options: [
+                    { value: "a", text: "فنزويلا" },
+                    { value: "b", text: "البرازيل" },
+                    { value: "c", text: "جيبوتي" },
+                    { value: "d", text: "روسيا" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 2,
+                text: "يتغير التركيب الثقافي في دولة الإمارات مؤخرًا نتيجة لـ:",
+                options: [
+                    { value: "a", text: "صغر مساحتها" },
+                    { value: "b", text: "الهجرات الوافدة" },
+                    { value: "c", text: "اختلاف المناهج التعليمية" },
+                    { value: "d", text: "تدريس اللغات الأجنبية" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 3,
+                text: "تشابه دولة ملاوي في الظروف المناخية مع دولة:",
+                options: [
+                    { value: "a", text: "تركيا" },
+                    { value: "b", text: "منغوليا" },
+                    { value: "c", text: "أفريقيا الوسطى" },
+                    { value: "d", text: "شيلي" }
+                ],
+                correct: "d"
+            },
+            {
+                id: 4,
+                text: "التأثير الإيجابي للهجرة على الدول المرسلة للمهاجرين:",
+                options: [
+                    { value: "a", text: "حل مشكلة البطالة" },
+                    { value: "b", text: "زيادة نسبة الأمية" },
+                    { value: "c", text: "زيادة حجم السكان" },
+                    { value: "d", text: "التنوع الثقافي بالدولة" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 5,
+                text: "يتمثل وجه التشابه الديموجرافي الذي يجمع بين دولتي نيجيريا وبتسوانا في:",
+                options: [
+                    { value: "a", text: "انخفاض معدلات الإعالة" },
+                    { value: "b", text: "قصور مشاركة المرأة في العملية الإنتاجية" },
+                    { value: "c", text: "الاعتماد على الأيدي العاملة الوافدة" },
+                    { value: "d", text: "الافتقار للتجانس السكاني" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 6,
+                text: "إذا اعتمدت الدولة على النظام الفيدرالي فإنها تتميز:",
+                options: [
+                    { value: "a", text: "وجود سلطة تشريعية واحدة" },
+                    { value: "b", text: "وجود أكثر من دستور" },
+                    { value: "c", text: "ضعف سلطة الإدارات المحلية" },
+                    { value: "d", text: "تعدد العملات الرسمية" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 7,
+                text: "تتميز روسيا الاتحادية عن الأمة العربية بـ:",
+                options: [
+                    { value: "a", text: "وجود سلطة حاكمة" },
+                    { value: "b", text: "وحدة العرق" },
+                    { value: "c", text: "وحدة اللغة" },
+                    { value: "d", text: "وحدة الدين" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 8,
+                text: "«لعبت تعدد الديانات دورًا مؤثرًا في حالات العنف وحركات التحرير والحروب الأهلية في الهند». في ضوء العبارة السابقة حدد أنسب السياسات التي يجب أن تتبعها الهند حكومة ونفاذا:",
+                options: [
+                    { value: "a", text: "تغليب المصالح" },
+                    { value: "b", text: "فرض تعدد" },
+                    { value: "c", text: "الحكم للأغلبية" },
+                    { value: "d", text: "ضبط معدلات السكان" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 9,
+                text: "أول خطوة في خطوات العملية الانتخابية:",
+                options: [
+                    { value: "a", text: "قرار إجراء الانتخابات" },
+                    { value: "b", text: "إجراء الانتخابات" },
+                    { value: "c", text: "تقسيم الدوائر الانتخابية" },
+                    { value: "d", text: "تسجيل الناخبين" }
+                ],
+                correct: "c"
+            },
+            {
+                id: 10,
+                text: "دولة تتوقع أن تمدد مياهها الإقليمية أكثر من 12 ميلاً بحرياً:",
+                options: [
+                    { value: "a", text: "جيبوتي" },
+                    { value: "b", text: "جنوب افرقيا" },
+                    { value: "c", text: "العراق" },
+                    { value: "d", text: "السودان" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 11,
+                text: "«رغم صغر مساحة سنغافورة وقلّة عدد سكانها الذي لا يتجاوز ٧ ملايين نسمة، فإنها تعيش حالة من الاستقرار والتقدم العلمي.» أشارت العبارة السابقة لبعض عناصر قوة سنغافورة وهي القوة:",
+                options: [
+                    { value: "a", text: "الديموغرافية والجغرافية" },
+                    { value: "b", text: "الأيديولوجية والديموغرافية" },
+                    { value: "c", text: "التنظيمية والاقتصادية" },
+                    { value: "d", text: "الاقتصادية والعلمية" }
+                ],
+                correct: "c"
+            },
+            {
+                id: 12,
+                text: "تفتقر دولة السويد المحددة في الخريطة المقابلة لبعض مميزات الشكل:",
+                options: [
+                    { value: "a", text: "استطالة الساحل" },
+                    { value: "b", text: "تركيبها المورفولوجي" },
+                    { value: "c", text: "تركيبها الديموجرافي" },
+                    { value: "d", text: "موقعها الفلكي" }
+                ],
+                correct: "d"
+            },
+            {
+                id: 13,
+                text: "قام محمد علي بإنشاء مصنع في ترسانة القلعة لصنع أنواع النحاس لوقاية السفن الحربية، وبعد ذلك نواة لتأسيس الصناعات:",
+                options: [
+                    { value: "a", text: "الهندسية" },
+                    { value: "b", text: "الكيماوية" },
+                    { value: "c", text: "الإنشائية" },
+                    { value: "d", text: "الاستراتيجية" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 14,
+                text: "دولة تفتقر عاصمتها الحماية والدفاع وتبعد عن حدها الشمالي 712 كم، وحدها الجنوبي 500 كم، وتبعد عن حدها الشرقي 202 كم، في ضوء تلك العبارة نستنتج أن هذه الدولة ذات شكل:",
+                options: [
+                    { value: "a", text: "مندمج" },
+                    { value: "b", text: "مندمج ذي بروز" },
+                    { value: "c", text: "شريطي طولي" },
+                    { value: "d", text: "شريطي عرضي" }
+                ],
+                correct: "c"
+            },
+            {
+                id: 15,
+                text: "أي الدول التالية لا يمكنها الاعتماد على نظرية الدفاع بالعمق؟",
+                options: [
+                    { value: "a", text: "روسيا" },
+                    { value: "b", text: "السعودية" },
+                    { value: "c", text: "البحرين" },
+                    { value: "d", text: "الجزائر" }
+                ],
+                correct: "c"
+            },
+            {
+                id: 16,
+                text: "يعد العراق دولة بترولية لأنه يشرف على مسطحات مائية......",
+                options: [
+                    { value: "a", text: "مغلقة" },
+                    { value: "b", text: "ضيقة" },
+                    { value: "c", text: "واسعة" },
+                    { value: "d", text: "مفتوحه" }
+                ],
+                correct: "d"
+            },
+            {
+                id: 17,
+                text: "تشتمل القوة العسكرية على أبعاد غير مادية تساعدها على النجاح ومنها......",
+                options: [
+                    { value: "a", text: "العقيدة القتالية" },
+                    { value: "b", text: "حجم الجيش" },
+                    { value: "c", text: "الإنفاق العسكري" },
+                    { value: "d", text: "المعدات العسكرية" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 18,
+                text: "إذا قامت الدولة (س) بإدارة مواردها وتحقيق الأمن للصالح العام فهي تطبق نظامها السياسي في صورته ......",
+                options: [
+                    { value: "a", text: "التنظيمية" },
+                    { value: "b", text: "المؤسسية" },
+                    { value: "c", text: "العسكرية" },
+                    { value: "d", text: "الاجتماعية" }
+                ],
+                correct: "d"
+            },
+            {
+                id: 19,
+                text: "أهمية مساحة الدولة لا تقاس بالكيلومترات المربعة، الدولة التي تؤكد صحة العبارة السابقة هي ......",
+                options: [
+                    { value: "a", text: "روسيا الاتحادية" },
+                    { value: "b", text: "فرنسا" },
+                    { value: "c", text: "الولايات المتحدة الأمريكية" },
+                    { value: "d", text: "كندا" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 20,
+                text: "بدراسة خريطة آسيا السياسية المقابلة نستنتج أن كل الدول التالية يسهل عليها موقعها الاتصال بكل دول العالم باستثناء دولة ......",
+                options: [
+                    { value: "a", text: "باكستان" },
+                    { value: "b", text: "إيران" },
+                    { value: "c", text: "العراق" },
+                    { value: "d", text: "نيبال" }
+                ],
+                correct: "d"
+            },
+            {
+                id: 21,
+                text: "يحدث التقدم التكنولوجي نتيجة اعتماد الدولة بـ ......",
+                options: [
+                    { value: "a", text: "البحث العلمي والنمو الاقتصادي" },
+                    { value: "b", text: "البحث العلمي والدعم المالي" },
+                    { value: "c", text: "البحث العلمي والثروة الطبيعية" },
+                    { value: "d", text: "البحث العلمي والموارد البشرية" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 22,
+                text: "تشترك أكثر من جهة في إصدار القرار السياسي بدولة ......",
+                options: [
+                    { value: "a", text: "الولايات المتحدة الأمريكية" },
+                    { value: "b", text: "الصين" },
+                    { value: "c", text: "فرنسا" },
+                    { value: "d", text: "السعودية" }
+                ],
+                correct: "C"
+            },
+            {
+                id: 23,
+                text: "تشابه الدولة الوحدوية والدولة الفيدرالية في ......",
+                options: [
+                    { value: "a", text: "سيطرة حكومتها المركزية على جميع المجالات" },
+                    { value: "b", text: "تمتع حكومتها المركزية بالقرارات السيادية" },
+                    { value: "c", text: "الاستقلال الذاتي للوحدات الإدارية" },
+                    { value: "d", text: "وجود سلطة محلية" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 24,
+                text: "يتشابه الموقع البحري لدولة أوكرانيا مع دولة ......",
+                options: [
+                    { value: "a", text: "الجزائر" },
+                    { value: "b", text: "بوليفيا" },
+                    { value: "c", text: "إيران" },
+                    { value: "d", text: "النرويج" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 25,
+                text: "يظهر الجانب الإيجابي للشكل المستطيل للدولة في ......",
+                options: [
+                    { value: "a", text: "تركيا" },
+                    { value: "b", text: "منغوليا" },
+                    { value: "c", text: "شيلي" },
+                    { value: "d", text: "أفريقيا الوسطى" }
+                ],
+                correct: "c"
+            },
+            {
+                id: 26,
+                text: "«مصر - اليابان - ألمانيا»، مجموعة دول تتشابه في ......",
+                options: [
+                    { value: "a", text: "ظهور المبدعين" },
+                    { value: "b", text: "المستوى التكنولوجي" },
+                    { value: "c", text: "هجرة العقول" },
+                    { value: "d", text: "الخصائص الديموجرافية" }
+                ],
+                correct: "a"
+            },
+            {
+                id: 27,
+                text: "تفتقر بعض الدول النامية إلى التطور التكنولوجي بسبب ......",
+                options: [
+                    { value: "a", text: "هجرة العلماء" },
+                    { value: "b", text: "قلة الدعم المادي" },
+                    { value: "c", text: "قلة ظهور المبدعين" },
+                    { value: "d", text: "قلة المدارس" }
+                ],
+                correct: "b"
+            },
+            {
+                id: 28,
+                text: "تعد دولة جزر القمر مثلاً للدولة العربية ......",
+                options: [
+                    { value: "a", text: "المركزية" },
+                    { value: "b", text: "الوحدوية" },
+                    { value: "c", text: "المندمجة" },
+                    { value: "d", text: "المجزأة" }
+                ],
+                correct: "d"
+            },
+            {
+                id: 29,
+                text: "تزداد احتمالية صمود روسيا الاتحادية في مواجهة الكوارث الطبيعية بسبب ......",
+                options: [
+                    { value: "a", text: "تنوع موارد وثروات الدولة" },
+                    { value: "b", text: "كثرة عدد السكان بالدولة" },
+                    { value: "c", text: "المساحة الكبيرة للدولة" },
+                    { value: "d", text: "تنوع التضاريس بالدولة" }
+                ],
+                correct: "c"
+            }
+        ];
+
+        // تهيئة المتغيرات
+        let currentQuestions = [];
+        let userData = {
+            name: '',
+            phone: '',
+            answers: {},
+            score: 0,
+            timestamp: null
+        };
+        let timeLeft = 45 * 60; // 45 دقيقة بالثواني
+        let timerInterval;
+        let shuffleCountdown = 5;
+        let shuffleTimeout;
+        let examSubmitted = false;
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            shuffleQuestions();
+            startTimer();
+            setupPageVisibilityListener();
+        });
+
+        // دالة لخلط الأسئلة عشوائياً
+        function shuffleQuestions() {
+            const shuffled = [...allQuestions];
+            
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            currentQuestions = shuffled;
+            renderQuestions();
+        }
+
+        // دالة لعرض الأسئلة في الصفحة
+        function renderQuestions() {
+            const quizForm = document.getElementById('quiz-form');
+            const submitButton = document.getElementById('submit-btn');
+            
+            const existingQuestions = quizForm.querySelectorAll('.question');
+            existingQuestions.forEach(q => q.remove());
+            
+            currentQuestions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question';
+                questionElement.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">${index + 1}</div>
+                        <div class="question-text">${question.text}</div>
+                    </div>
+                    <div class="options">
+                        ${question.options.map(option => `
+                            <label>
+                                <input type="radio" name="q${question.id}" value="${option.value}">
+                                ${option.text}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                
+                quizForm.insertBefore(questionElement, submitButton);
+            });
+        }
+
+        // دالة لبدء المؤقت
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `⏱️ الوقت المتبقي: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0 && !examSubmitted) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                } else {
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        // دالة لمراقبة رؤية الصفحة
+        function setupPageVisibilityListener() {
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && !examSubmitted) {
+                    showShuffleWarning();
+                } else {
+                    clearTimeout(shuffleTimeout);
+                    document.getElementById('warning').style.display = 'none';
+                }
+            });
+            
+            window.addEventListener('blur', function() {
+                if (!examSubmitted) {
+                    showShuffleWarning();
+                }
+            });
+            
+            window.addEventListener('focus', function() {
+                clearTimeout(shuffleTimeout);
+                document.getElementById('warning').style.display = 'none';
+            });
+        }
+
+        // دالة لعرض تحذير تغيير ترتيب الأسئلة
+        function showShuffleWarning() {
+            const warningElement = document.getElementById('warning');
+            const countdownElement = document.getElementById('countdown');
+            
+            warningElement.style.display = 'block';
+            shuffleCountdown = 5;
+            countdownElement.textContent = shuffleCountdown;
+            
+            const countdownInterval = setInterval(() => {
+                shuffleCountdown--;
+                countdownElement.textContent = shuffleCountdown;
+                
+                if (shuffleCountdown <= 0) {
+                    clearInterval(countdownInterval);
+                    shuffleQuestions();
+                    warningElement.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        // دالة لجمع الإجابات
+        function collectAnswers() {
+            const answers = {};
+            currentQuestions.forEach(question => {
+                const questionName = 'q' + question.id;
+                const selectedOption = document.querySelector(`input[name=${questionName}]:checked`);
+                answers[questionName] = selectedOption ? selectedOption.value : null;
+            });
+            return answers;
+        }
+
+        // دالة لحساب النتيجة
+        function calculateScore(answers) {
+            let score = 0;
+            currentQuestions.forEach(question => {
+                const questionName = 'q' + question.id;
+                if (answers[questionName] === question.correct) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        // دالة لإنشاء بصمة فريدة للنتيجة
+        function createResultHash(userData) {
+            const dataString = `${userData.name}|${userData.phone}|${userData.score}|${userData.timestamp}|${JSON.stringify(userData.answers)}`;
+            let hash = 0;
+            for (let i = 0; i < dataString.length; i++) {
+                const char = dataString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            const randomId = Math.random().toString(36).substring(2, 15);
+            return `${Math.abs(hash).toString(36)}${randomId}`;
+        }
+
+        // دالة لالتقاط صورة للنتيجة
+        function captureResultImage(userData) {
+            return new Promise((resolve) => {
+                const resultElement = document.createElement('div');
+                resultElement.style.cssText = `
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    direction: rtl;
+                    max-width: 600px;
+                    margin: 0 auto;
+                `;
+                
+                const resultHash = createResultHash(userData);
+                
+                resultElement.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e3c72; padding-bottom: 10px;">
+                        <h1 style="color: #1e3c72; margin-bottom: 10px;">🏛️ امتحان تاريخ</h1>
+                        <p style="color: #666;">👨‍🏫 الدكتور محمد السيد خرخاش</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <p style="font-weight: bold; color: #1e3c72; margin-bottom: 5px;">👤 الطالب: ${userData.name}</p>
+                        <p style="font-weight: bold; color: #1e3c72; margin-bottom: 5px;">📞 الهاتف: ${userData.phone}</p>
+                        <p style="font-weight: bold; color: #1e3c72; margin-bottom: 5px;">📅 تاريخ الإرسال: ${new Date(userData.timestamp).toLocaleString('ar-SA')}</p>
+                    </div>
+                    
+                    <div style="background: #f5f2ee; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+                        <h2 style="color: #1e3c72; margin: 0;">النتيجة: ${userData.score} من ${currentQuestions.length}</h2>
+                        <p style="color: #666; margin: 5px 0 0;">${(userData.score / currentQuestions.length * 100).toFixed(1)}%</p>
+                    </div>
+                    
+                    <div style="font-size: 12px; color: #999; text-align: center; margin-top: 20px;">
+                        <p>رمز التحقق: ${resultHash}</p>
+                        <p>© 2025 امتحان تاريخ. جميع الحقوق محفوظة.</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(resultElement);
+                
+                html2canvas(resultElement).then(canvas => {
+                    const image = canvas.toDataURL('image/png');
+                    document.body.removeChild(resultElement);
+                    resolve({image, hash: resultHash});
+                });
+            });
+        }
+
+        // دالة لإرسال النتيجة عبر واتساب
+        async function sendResultsAsImage(userData) {
+            try {
+                const whatsappNumber = "201116901143";
+                const {image, hash} = await captureResultImage(userData);
+                
+                const message = `نتيجة امتحان تاريخ%0A%0A👤 الطالب: ${userData.name}%0A📞 الهاتف: ${userData.phone}%0A📅 تاريخ الإرسال: ${new Date(userData.timestamp).toLocaleString('ar-SA')}%0A🏆 النتيجة: ${userData.score} من ${currentQuestions.length} (${(userData.score / currentQuestions.length * 100).toFixed(1)}%)%0A%0A🔒 رمز التحقق: ${hash}%0A%0A👨‍🏫 المعلم: الدكتور محمد السيد خرخاش`;
+
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+                
+                // إنشاء عنصر رابط لتحميل الصورة
+                const downloadLink = document.createElement('a');
+                downloadLink.href = image;
+                downloadLink.download = `نتيجة_${userData.name}_${new Date().getTime()}.png`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // فتح رابط واتساب
+                window.open(whatsappUrl, '_blank');
+            } catch (error) {
+                console.error('خطأ في إرسال النتيجة:', error);
+                alert('حدث خطأ أثناء محاولة إرسال النتيجة. يرجى المحاولة مرة أخرى.');
+            }
+        }
+
+        // دالة لتقديم الامتحان
+        function submitExam() {
+            if (examSubmitted) return;
+            
+            examSubmitted = true;
+            clearInterval(timerInterval);
+            
+            const userName = document.getElementById('user-name').value.trim();
+            const userPhone = document.getElementById('user-phone').value.trim();
+            
+            if (!userName) {
+                alert('يرجى إدخال اسمك قبل إنهاء الامتحان.');
+                examSubmitted = false;
+                return;
+            }
+            
+            if (!userPhone || userPhone === '+20') {
+                alert('يرجى إدخال رقم هاتف صحيح قبل إنهاء الامتحان.');
+                examSubmitted = false;
+                return;
+            }
+            
+            userData.name = userName;
+            userData.phone = userPhone;
+            userData.answers = collectAnswers();
+            userData.score = calculateScore(userData.answers);
+            userData.timestamp = new Date().toISOString();
+            
+            // عرض النتيجة
+            const resultsElement = document.getElementById('results');
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `🏆 النتيجة: ${userData.score} من ${currentQuestions.length} (${(userData.score / currentQuestions.length * 100).toFixed(1)}%)`;
+            resultsElement.style.display = 'block';
+            
+            // إخفاء نموذج الامتحان
+            document.getElementById('quiz-form').style.display = 'none';
+            
+            // إضافة حدث لإرسال النتيجة عبر واتساب
+            document.getElementById('send-btn').addEventListener('click', function() {
+                sendResultsAsImage(userData);
+            });
+            
+            // التقاط صورة للنتيجة تلقائياً وإرسالها
+            setTimeout(() => {
+                sendResultsAsImage(userData);
+            }, 2000);
+        }
+
+        // إضافة حدث لزر إنهاء الامتحان
+        document.getElementById('submit-btn').addEventListener('click', submitExam);
+    </script>
+</body>
+</html>
